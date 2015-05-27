@@ -3,7 +3,5 @@ BOARD_TAG = diecimila
 MCU = atmega328
 
 ARDUINO_LIBS = Wire Grove_LCD_RGB_Backlight Grove_Temperature_And_Humidity_Sensor-master
-include /usr/local/share/arduino/Arduino.mk
 
-check-syntax:
-	$(CXX) -c -include Arduino.h -x c++ $(CXXFLAGS) $(CPPFLAGS) -fsyntax-only $(CHK_SOURCES)
+include ~/.makefiles/Arduino-check-syntax.mk
