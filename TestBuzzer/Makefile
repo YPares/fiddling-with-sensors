@@ -1,6 +1,6 @@
 ARDUINO_DIR = /opt/arduino
 BOARD_TAG = diecimila
-MCU = atmega328
+BOARD_SUB = atmega328
 
 ARDUINO_LIBS = Statistic
 
