@@ -8,6 +8,14 @@
 rgb_lcd lcd;
 DHT dht(DHT_PIN, DHT11);
 
+#ifdef SERVO_AS_POINTER
+#include <Servo.h>
+
+#define SERVO_PIN 3
+
+Servo servo;
+#endif
+
 void setup() 
 {
     Serial.begin(9600);
@@ -16,6 +24,10 @@ void setup()
     lcd.setPWM(REG_RED, 255);
     lcd.setPWM(REG_BLUE, 255);
     lcd.setPWM(REG_GREEN, 255);
+
+    #ifdef SERVO_AS_POINTER
+    servo.attach(SERVO_PIN);
+    #endif
 }
 
 /*  // Used only with the basic temperature sensor
@@ -36,7 +48,8 @@ float ramp_value(float x, float min_x, float max_x, float min_y, float max_y) {
 }
 
 float ramp_log_value(float x, float min_x, float max_x, float min_y, float max_y) {
-  return ramp_value(log(x), log(min_x), log(max_x), min_y, max_y); 
+  return ramp_value(log(x), log(min_x), log(max_x), min_y, max_y);
+  // map function can't handle reverse intervals, apparently.
 }
 
 void loop()
@@ -50,5 +63,10 @@ void loop()
     lcd.print(String("Temp: ") + temperature + ".C");
     lcd.setCursor(0,1);
     lcd.print(String("Humi: ") + humidity + "%");
+
+    #ifdef SERVO_AS_POINTER
+    servo.write(ramp_value(temperature, 10, 35, 150, 0));
+    #endif
+    
     delay(1000);
 }
