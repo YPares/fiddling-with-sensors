@@ -12,7 +12,7 @@ def clamp(m1, x, m2):
     return min(max(m1, x), m2)
 
 def e(v):
-    return int(clamp(0,v,255))
+    return clamp(0,int(v),255)
 
 def setColor(time, w, temp, humid):
     ## Hour factor (brightness)
@@ -52,15 +52,20 @@ class Weather:
     def m(self):
         return self.bulletin[u"main"]
 
+def props(obj):
+    return dict((name, getattr(obj, name)) for name in dir(obj) if name.startswith("tm"))
+    
 while True:
     try:
         [temp,humid]=g.dht(7,0)
 	t = time.time()
+        s = time.localtime(t)
         w = Weather("Neuilly-Plaisance", "fr")
         w.update(t)
         w.bulletin[u"home"] = {u"temp": temp, u"humidity": humid}
-	setColor(time.localtime(t), w, temp, humid)
-	l.setText("%.1f C - %.1f %% %.1f C - %.1f %%" % \
+        w.bulletin[u"time"] = props(s)
+	setColor(s, w, temp, humid)
+	l.setText("Ext: %.1fC %.1f%%Int: %.1fC %.1f%%" % \
                   (w.m["temp"], w.m["humidity"], temp, humid))
         logAll(t, w, temp, humid)
     except:
