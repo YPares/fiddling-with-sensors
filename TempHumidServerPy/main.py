@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #encoding=utf8
 
 from bottle import route, run, template
