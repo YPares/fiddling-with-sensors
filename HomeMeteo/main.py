@@ -54,7 +54,12 @@ class Weather:
 
 def props(obj):
     return dict((name, getattr(obj, name)) for name in dir(obj) if name.startswith("tm"))
-    
+
+# O's are more readable then zeros on the LCD
+def repl0(args):
+    return [("{:.1f}".format(x).replace("0","O") if x else "0") \
+            for x in args]
+
 while True:
     try:
         [temp,humid]=g.dht(7,0)
@@ -65,10 +70,11 @@ while True:
         w.bulletin[u"home"] = {u"temp": temp, u"humidity": humid}
         w.bulletin[u"time"] = props(s)
 	setColor(s, w, temp, humid)
-	l.setText("Ext: %.1fC %.1f%%Int: %.1fC %.1f%%" % \
-                  (w.m["temp"], w.m["humidity"], temp, humid))
+	l.setText("Ext: {:s}C {:s}%Int: {:s}C {:s}%".format( \
+                  *repl0((w.m["temp"], w.m["humidity"], temp, humid))))
         logAll(t, w, temp, humid)
     except:
-        print traceback.format_exc()
+        print(time.ctime(t))
+        print(traceback.format_exc())
     time.sleep(60)
 
