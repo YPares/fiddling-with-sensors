@@ -1,4 +1,3 @@
-#include <Statistic.h>
 #include <Timer.h>
 // See https://tutoarduino.com/portfolio-items/8555/
 
@@ -86,14 +85,11 @@ void countdown() {
   }
 }
 
-Statistic pot_vals;
 bool button_was_high = false;
 void loop() {
-  pot_vals.add(analogRead(SENSOR_PIN));
-  if(pot_vals.count() >= SUBS_VALS)
-  {
-    unsigned long x = (unsigned long)ramp_value(pot_vals.average(),0,1023,0,60*10);
-    pot_vals.clear();
+    unsigned long x = (unsigned long)ramp_value(analogRead(SENSOR_PIN),0,1023,0,60*10);
+    int step = x%5;  // 5s steps
+    x = x + (step <= 2 ? -step : (5-step));  // Smoothing
     bool button_is_high = digitalRead(BUTTON_PIN) == HIGH;
     bool button_rising_edge = !button_was_high && button_is_high;
     button_was_high = button_is_high;
@@ -111,7 +107,6 @@ void loop() {
       //timer.stop(ring_action);
       //ring_action = -1;
     }
-  }
   //  delay(10);
   timer.update();
 }
