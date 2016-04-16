@@ -9,13 +9,21 @@ if(!c.open(device, SerialIO.B9600, SerialIO.ASCII)) {
   me.exit();
  }
 
-while(true){
-c.onLine() => now;
-c.getLine() => string line;
-
-if(line$Object != null) {
-StringTokenizer tok;
-tok.set(line); Std.atoi(tok.next()) => int pos;
-s.freq(Std.mtof(pos));
+fun int clamp(int x, int a, int b) {
+  if(x > b) return b;
+  else if(x < a) return a;
+  else return x;
 }
+
+while(true){
+  c.onLine() => now;
+  c.getLine() => string line;
+
+  if(line$Object != null) {
+    StringTokenizer tok;
+    tok.set(line);
+    Std.atoi(tok.next()) => int pos;
+    clamp(pos+30, 45, 80) => int note;
+    s.freq(Std.mtof(note));
+  }
 }   

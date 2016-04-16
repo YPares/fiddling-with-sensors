@@ -24,5 +24,5 @@ int getDistance() {
 void loop() {
   Serial.println(getDistance());
   //Serial.println(String("From IR: ") + analogRead(IR_TELEM));
-  delay(60);
+  delay(100);
 }
