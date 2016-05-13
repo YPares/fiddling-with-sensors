@@ -4,6 +4,5 @@ include ~/.makefiles/Arduino-check-syntax.mk
 
 copilot-c99-codegen/copilot.c:
 	@rm -rf copilot-c99-codegen
-	@stack build
-	@stack exec test-copilot-exe
+	@stack runghc -- app/Main.hs
 
