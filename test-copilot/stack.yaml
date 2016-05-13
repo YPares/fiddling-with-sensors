@@ -1,0 +1,22 @@
+flags: {}
+extra-package-dbs: []
+packages:
+- '.'
+extra-deps:
+- atom-1.0.13
+- atto-lisp-0.2.2.2
+- copilot-2.2.0
+- copilot-c99-2.2.0
+- copilot-cbmc-2.2.0
+- copilot-core-2.2.0
+- copilot-language-2.2.0
+- copilot-libraries-2.2.0
+- copilot-sbv-2.2.0
+- copilot-theorem-2.2.0
+- data-fix-0.0.3
+- ivory-0.1.0.3
+- ivory-artifact-0.1.0.3
+- ivory-stdlib-0.1.0.3
+- pretty-ncols-0.1
+- smtlib2-0.3
+resolver: lts-5.16
